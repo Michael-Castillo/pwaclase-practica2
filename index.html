@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrusel de imágenes</title>
+</head>
+<style type="text/css" media="screen">
+    body {
+        background-color: #181818;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 50px;
+        color: #ffffff;
+    }
+
+    .carousel {
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+        position: relative;
+    }
+
+    #imagen {
+        width: 100%;
+        height: 400px;
+        background-size: cover;
+        position: relative;
+    }
+
+    #retroceder,
+    #avanzar {
+        background-color: #23439b;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 16px;
+        z-index: 1;
+    }
+
+    #retroceder {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+    }
+
+    #avanzar {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+    }
+</style>
+
+<script>
+    window.onload = function () {
+        // Variables
+        const IMAGENES = [
+            'img/01.jpg',
+            'img/02.jpg',
+            'img/03.jpg'
+        ];
+        let posicionActual = 0;
+        let $botonRetroceder = document.querySelector('#retroceder');
+        let $botonAvanzar = document.querySelector('#avanzar');
+        let $imagen = document.querySelector('#imagen');
+
+        // Funciones
+
+        /**
+         * Funcion que cambia la foto en la siguiente posicion
+         */
+        function pasarFoto() {
+            if (posicionActual >= IMAGENES.length - 1) {
+                posicionActual = 0;
+            } else {
+                posicionActual++;
+            }
+            renderizarImagen();
+        }
+
+        /**
+         * Funcion que cambia la foto en la anterior posicion
+         */
+        function retrocederFoto() {
+            if (posicionActual <= 0) {
+                posicionActual = IMAGENES.length - 1;
+            } else {
+                posicionActual--;
+            }
+            renderizarImagen();
+        }
+
+        /**
+         * Funcion que actualiza la imagen de imagen dependiendo de posicionActual
+         */
+        function renderizarImagen() {
+            $imagen.style.backgroundImage = `url(${IMAGENES[posicionActual]})`;
+        }
+
+        // Eventos
+        $botonAvanzar.addEventListener('click', pasarFoto);
+        $botonRetroceder.addEventListener('click', retrocederFoto);
+
+        // Iniciar
+        renderizarImagen();
+    } 
+</script>
+</head>
+
+<body>
+    <h1>3 en 1</h1>
+    <div class="carousel">
+        <button id="retroceder">&#10094;</button>
+        <div id="imagen"></div>
+        <button id="avanzar">&#10095;</button>
+    </div>
+</body>
+</html>
